@@ -13,6 +13,7 @@ import {
   TabbarItem,
   Cell,
   CellGroup,
+  Search,
 } from "vant";
 import { Image as VanImage } from "vant";
 
@@ -25,6 +26,7 @@ Vue.use(Row);
 Vue.use(Cell);
 Vue.use(CellGroup);
 Vue.use(Icon);
+Vue.use(Search);
 new Vue({
   router,
   render: (h) => h(App),

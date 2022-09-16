@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import { getCommendListApi } from "@/Api";
-import { getNewestApi } from "@/Api";
+import { getCommendListApi,getNewestApi } from "@/Api";
+
 export default {
   data() {
     return {
