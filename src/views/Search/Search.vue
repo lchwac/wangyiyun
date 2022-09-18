@@ -46,6 +46,8 @@ export default {
       value: "",
       hotWordsList: [],
       theBest: [],
+      timer: null,
+      flag: false,
     };
   },
   async created() {
@@ -55,16 +57,24 @@ export default {
     console.log(this.hotWordsList);
   },
   methods: {
-    onbut(params) {
+    async onbut(params) {
       this.value = params;
+      const res = await searchResultApi({ type: 1, keywords: this.value });
+      this.theBest = res.data.result.songs;
+      this.flag = true;
     },
   },
   watch: {
-    async value(val) {
-      if (val.length === 0) return (this.theBest = []);
-      const res = await searchResultApi({ type: 1, keywords: val });
-      this.theBest = res.data.result.songs;
-      console.log(this.theBest);
+    async value() {
+      if (this.flag) {
+        if (this.timer) clearTimeout(this.timer);
+        if (this.value.length === 0) return (this.theBest = []);
+        this.timer = setTimeout(async () => {
+          const res = await searchResultApi({ type: 1, keywords: this.value });
+          this.theBest = res.data.result.songs;
+          console.log(this.theBest);
+        }, 1000);
+      }
     },
   },
 };
