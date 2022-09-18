@@ -21,25 +21,21 @@
     <div class="search_wrap" v-else>
       <!-- 标题 -->
       <p class="hot_title">最佳匹配</p>
-      <van-cell
+      <SingSong
         v-for="item in theBest"
         :key="item.id"
         center
         :id="item.id"
         :title="item.name"
         :label="item.ar[0].name + '-' + item.name"
-      >
-        <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-        <template #right-icon>
-          <van-icon name="play-circle-o" class="search-icon" />
-        </template>
-      </van-cell>
+      ></SingSong>
     </div>
   </div>
 </template>
 
 <script>
 import { getHotSearchWordsApi, searchResultApi } from "@/Api";
+import SingSong from "@/components/SingSong";
 export default {
   data() {
     return {
@@ -49,6 +45,9 @@ export default {
       timer: null,
       flag: false,
     };
+  },
+  components: {
+    SingSong,
   },
   async created() {
     const res = await getHotSearchWordsApi();
@@ -62,6 +61,15 @@ export default {
       const res = await searchResultApi({ type: 1, keywords: this.value });
       this.theBest = res.data.result.songs;
       this.flag = true;
+    },
+    play() {
+      console.log(this.id);
+      this.$router.push({
+        path: "/play",
+        query: {
+          id: this.id,
+        },
+      });
     },
   },
   watch: {

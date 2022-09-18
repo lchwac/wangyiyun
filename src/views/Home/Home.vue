@@ -10,9 +10,11 @@
     <p class="title">最新音乐</p>
     <!-- 最新音乐 -->
     <SingSong
-      :newestList="newestListo"
       v-for="item in newestListo"
+      :key="item.id"
       :id="item.id"
+      :title="item.name"
+      :lableAuthor="item.song.artists[0].name + '-' + item.name"
     ></SingSong>
   </div>
 </template>

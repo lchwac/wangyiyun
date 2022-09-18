@@ -3,11 +3,10 @@
     <!-- 最新音乐 -->
     <van-cell-group>
       <van-cell
-        v-for="item in newestList"
-        :key="item.id"
         center
-        :title="item.name"
-        :label="item.song.artists[0].name + '-' + item.name"
+        :title="this.title"
+        :lable="this.lableAuthor"
+        @click="comment"
       >
         <!-- 使用 right-icon 插槽来自定义右侧图标 -->
         <template #right-icon>
@@ -21,18 +20,25 @@
 <script>
 export default {
   props: {
-    newestList: [],
-    id: {
-      type: Number,
-    },
+    id: Number,
+    lableAuthor: String,
+    title: String,
   },
   methods: {
     play() {
+      console.log(this.id);
       this.$router.push({
-        path: "play",
-        params: {
+        path: "/play",
+        query: {
           id: this.id,
         },
+      });
+    },
+    comment() {
+      console.log(this.id);
+      this.$router.push({
+        path: "/comment",
+        query: { id: this.id },
       });
     },
   },

@@ -2,9 +2,7 @@
   <div class="main">
     <van-nav-bar :title="title" fixed />
 
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
+    <router-view></router-view>
 
     <!-- 底部导航 -->
     <van-tabbar v-model="active">
@@ -18,13 +16,14 @@
 export default {
   data() {
     return {
-      active: 0,
+      active: this.$route.meta.id,
       title: this.$route.meta.title,
     };
   },
   watch: {
     $route() {
       this.title = this.$route.meta.title;
+      this.active = this.$route.meta.id;
     },
   },
 };

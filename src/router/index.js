@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "@/views/Home/Home";
 import Search from "@/views/Search/Search";
 import Play from "@/views/Play";
+import Comment from "@/views/Comment/Comment";
 Vue.use(VueRouter);
 
 /* const routes = [
@@ -25,12 +26,21 @@ const router = new VueRouter({
   routes: [
     { path: "/play", component: Play },
     { path: "/", redirect: "/home" },
-    { path: "/home", component: Home, meta: { title: "首页" }, props: true },
+    {
+      path: "/home",
+      component: Home,
+      meta: { title: "首页", id: 0 },
+      props: true,
+    },
     {
       path: "/search",
       component: Search,
-      meta: { title: "搜索" },
+      meta: { title: "搜索", id: 1 },
       props: true,
+    },
+    {
+      path: "/comment",
+      component: Comment,
     },
   ],
 });

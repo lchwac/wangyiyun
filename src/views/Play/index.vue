@@ -13,7 +13,7 @@
         name="arrow-left"
         size="20"
         class="left-incon"
-        @click="$router.back()"
+        @click="$router.go(-1)"
       />
     </div>
     <!-- 留声机 - 容器 -->
