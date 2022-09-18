@@ -9,41 +9,35 @@
     </van-row>
     <p class="title">最新音乐</p>
     <!-- 最新音乐 -->
-    <van-cell-group>
-      <van-cell
-        v-for="item in newestList"
-        :key="item.id"
-        center
-        :title="item.name"
-        :label="item.song.artists[0].name + '-' + item.name"
-      >
-        <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-        <template #right-icon>
-          <van-icon name="play-circle-o" class="search-icon" />
-        </template>
-      </van-cell>
-    </van-cell-group>
+    <SingSong
+      :newestList="newestListo"
+      v-for="item in newestListo"
+      :id="item.id"
+    ></SingSong>
   </div>
 </template>
 
 <script>
-import { getCommendListApi,getNewestApi } from "@/Api";
+import { getCommendListApi, getNewestApi } from "@/Api";
+import SingSong from "@/components/SingSong";
 
 export default {
   data() {
     return {
       commendlist: [],
-      newestList: [],
+      newestListo: [],
     };
   },
   async created() {
     const res = await getCommendListApi({ limit: 6 });
     this.commendlist = res.data.result;
-    console.log(this.commendlist);
 
     const data = await getNewestApi({ limit: 20 });
-    this.newestList = data.data.result;
-    console.log(this.newestList);
+    this.newestListo = data.data.result;
+    console.log(this.newestListo);
+  },
+  components: {
+    SingSong,
   },
 };
 </script>

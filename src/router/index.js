@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home/Home";
 import Search from "@/views/Search/Search";
+import Play from "@/views/Play";
 Vue.use(VueRouter);
 
 /* const routes = [
@@ -22,6 +23,7 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
   routes: [
+    { path: "/play", component: Play },
     { path: "/", redirect: "/home" },
     { path: "/home", component: Home, meta: { title: "首页" }, props: true },
     {
