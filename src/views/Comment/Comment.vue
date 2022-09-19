@@ -1,13 +1,20 @@
 <template>
   <div>
     <van-nav-bar
-    title="相关评论"
-  left-arrow
-  @click-left="$router.back()"
-  fixed/>
+    title="最新评论"
+    left-arrow
+    @click-left="$router.back()"
+    fixed/>
     
     <div class="main">
-      <van-cell  v-for="item in  commentList" :key="item.commentId">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <van-list
+        v-model="loading"
+       :finished="finished"
+       finished-text="没有更多了"
+       @load="onLoad"
+     >
+       <van-cell  v-for="item in  commentList" :key="item.commentId">
         <template>
         <div class="wrap">
           <div class="img_wrap">
@@ -26,6 +33,9 @@
         </div>  
          </template>
         </van-cell>     
+        </van-list>
+     </van-pull-refresh>
+      
       </div>
     </div>
   
@@ -36,18 +46,43 @@
 
 <script>
 import { getCommentAPI } from "@/Api";
+import { Toast } from "vant";
 export default {
   data() {
     return {
       commentList: [],
+      isLoading: false,
+      loading: false,
+      finished: false,
+      page: 1,
     };
   },
   async created() {
     console.log(this.$route.query.id);
-    const data = await getCommentAPI({ id: this.$route.query.id, limit: 20 });
-    this.commentList = data.data.comments;
-    console.log(data.data);
-    console.log(this.commentList);
+  },
+  methods: {
+    onRefresh() {
+      console.log("加载中");
+      this.page = 1;
+      this.getList();
+      Toast("刷新成功");
+    },
+    async getList() {
+      const data = await getCommentAPI({
+        id: this.$route.query.id,
+        limit: 20,
+        offset: (this.page - 1) * 20,
+      });
+      this.commentList = [...this.commentList, ...data.data.comments];
+      console.log(this.commentList);
+      this.isLoading = false;
+      this.loading = false;
+    },
+    onLoad() {
+      console.log("加载中");
+      this.getList();
+      this.page++;
+    },
   },
 };
 </script>
