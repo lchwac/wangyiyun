@@ -2,12 +2,7 @@
   <div>
     <!-- 最新音乐 -->
     <van-cell-group>
-      <van-cell
-        center
-        :title="this.title"
-        :lable="this.lableAuthor"
-        @click="comment"
-      >
+      <van-cell center :title="title" :label="lableAuthor" @click="comment">
         <!-- 使用 right-icon 插槽来自定义右侧图标 -->
         <template #right-icon>
           <van-icon name="play-circle-o" class="search-icon" @click="play" />
